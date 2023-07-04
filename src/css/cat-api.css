@@ -1,4 +1,12 @@
-.loader {
+.breed-select{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  padding: 5px 0;
+}
+
+/* .loader {
     width: 48px;
     height: 48px;
     display: inline-block;
@@ -46,4 +54,4 @@
     100% {
       transform: rotate(-360deg);
     }
-  }
+  } */
