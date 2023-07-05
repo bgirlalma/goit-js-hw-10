@@ -1,13 +1,18 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchBreeds, fetchCatByBreed, loader } from './js/cat-api.js';
-import SlimSelect from 'slim-select';
-let breeds = [];
+import { fetchBreeds, fetchCatByBreed, loader} from './js/cat-api.js';
+
+import SlimSelect from 'slim-select'
+
 new SlimSelect({
   select: '#selectElement',
   allowDeselect: true,
   showFirstOption: false,
-});
+})
+
+const error = document.querySelector('.error');
+error.style.display = 'none'
 fetchBreeds()
+
   .then(breedsData => {
     loader.style.display = 'none';
     breeds = breedsData;
@@ -15,6 +20,7 @@ fetchBreeds()
     breedSelect.innerHTML = breeds
       .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
       .join('');
+      
   })
   .catch(error => {
     loader.style.display = 'none';
@@ -37,25 +43,27 @@ breedSelect.addEventListener('change', event => {
       Notify.failure('Такого котика немає=(');
     });
 });
+
 function getBreedById(id) {
   return breeds.find(breed => breed.id === id);
 }
-function createCatInfo(catData, id) {
-  const cat = catData[0];
-  const catBreed = getBreedById(id);
-  return `
-    <div class="cat-info-container">
-      <div class="cat-text">
-        <h2>${catBreed.name}</h2>
-        <p>${catBreed.temperament}</p>
-        <p>${catBreed.description}</p>
+
+  function createCatInfo(catData, id) {
+    const cat = catData[0];
+    const catBreed = getBreedById(id);
+    return `
+      <div class="cat-info-container">
+        <div class="cat-text">
+          <h2>${catBreed.name}</h2>
+          <p>${catBreed.temperament}</p>
+          <p>${catBreed.description}</p>
+        </div>
+        <div class="cat-image">
+          <img src="${cat.url}" alt="${catBreed.name}" width="500">
+        </div>
       </div>
-      <div class="cat-image">
-        <img src="${cat.url}" alt="${catBreed.name}" width="500">
-      </div>
-    </div>
-  `;
-}
+    `;
+  }
 
   
  
