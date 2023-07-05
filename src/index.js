@@ -1,5 +1,5 @@
-
-import { fetchBreeds, fetchCatByBreed, loader, error } from './js/cat-api.js';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { fetchBreeds, fetchCatByBreed, loader} from './js/cat-api.js';
 
 import SlimSelect from 'slim-select'
 
@@ -9,7 +9,8 @@ new SlimSelect({
   showFirstOption: false,
 })
 
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+const error = document.querySelector('.error');
+error.style.display = 'none'
 fetchBreeds()
 
   .then(breedsData => {
@@ -39,6 +40,7 @@ breedSelect.addEventListener('change', event => {
     .catch(error => {
       loader.style.display = 'none';
       console.error(error);
+      Notify.failure('Такого котика немає=(');
     });
 });
 
